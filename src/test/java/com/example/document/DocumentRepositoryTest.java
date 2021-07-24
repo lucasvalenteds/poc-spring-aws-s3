@@ -44,11 +44,11 @@ class DocumentRepositoryTest extends IntegrationTest {
     }
 
     @Test
-    void testPersistingFile() {
+    void testCreatingDocument() {
         var path = Path.of("src", "test", "resources", "pepper.jpeg");
         var mediaType = MediaType.IMAGE_JPEG;
 
-        StepVerifier.create(repository.persist(ownerId, path, mediaType))
+        StepVerifier.create(repository.create(ownerId, path, mediaType))
             .assertNext(document -> {
                 assertNotNull(document.getUrl());
 

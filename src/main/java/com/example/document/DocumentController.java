@@ -34,7 +34,7 @@ public class DocumentController {
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Document> persist(@PathVariable UUID ownerId, @RequestPart("file") Mono<FilePart> filePart) {
+    public Mono<Document> create(@PathVariable UUID ownerId, @RequestPart("file") Mono<FilePart> filePart) {
         var owner = Mono.just(ownerId);
 
         var filename = Mono.from(filePart)
@@ -45,7 +45,7 @@ public class DocumentController {
 
         return Mono.zip(owner, filePart, filename, mediaType)
             .delayUntil(tuple -> tuple.getT2().transferTo(tuple.getT3()))
-            .flatMap(tuple -> repository.persist(tuple.getT1(), tuple.getT3(), tuple.getT4()))
+            .flatMap(tuple -> repository.create(tuple.getT1(), tuple.getT3(), tuple.getT4()))
             .delayUntil(tuple -> deleteFileFromFileSystem(filename));
     }
 

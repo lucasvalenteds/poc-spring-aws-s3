@@ -62,7 +62,7 @@ class DocumentControllerTest extends IntegrationTest {
     }
 
     @Test
-    void testPersistingFile() {
+    void testCreatingDocument() {
         var file = new FileSystemResource(Path.of("src", "test", "resources", "pepper.jpeg"));
 
         var document = client.post()

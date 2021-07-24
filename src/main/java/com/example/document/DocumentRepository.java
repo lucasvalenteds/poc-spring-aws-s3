@@ -23,7 +23,7 @@ public final class DocumentRepository {
         this.signer = signer;
     }
 
-    public Mono<Document> persist(UUID ownerId, Path path, MediaType mediaType) {
+    public Mono<Document> create(UUID ownerId, Path path, MediaType mediaType) {
         var documentKey = Mono.from(createDocumentKey(ownerId, mediaType));
         var requestBody = Mono.from(createRequestBodyWithFile(path));
         var contentType = Mono.just(mediaType.toString());
