@@ -8,8 +8,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.testcontainers.containers.localstack.LocalStackContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +28,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Testcontainers
 class DocumentControllerTest extends IntegrationTest {
+
+    @Container
+    private static final LocalStackContainer CONTAINER = new LocalStackContainer(DockerImageName.parse(IMAGE))
+        .withServices(LocalStackContainer.Service.S3);
+
+    @DynamicPropertySource
+    private static void setApplicationProperties(DynamicPropertyRegistry registry) {
+        IntegrationTest.setApplicationProperties(registry, CONTAINER);
+    }
 
     private final UUID ownerId = UUID.randomUUID();
 
