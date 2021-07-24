@@ -1,6 +1,5 @@
-package com.example;
+package com.example.document;
 
-import com.example.document.DocumentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +10,7 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import java.nio.file.Path;
 
 @Configuration
-public class AppConfiguration {
+public class DocumentConfiguration {
 
     @Bean
     ObjectMapper objectMapper() {

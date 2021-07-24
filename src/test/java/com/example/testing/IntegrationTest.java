@@ -1,6 +1,6 @@
 package com.example.testing;
 
-import com.example.AppConfiguration;
+import com.example.document.DocumentConfiguration;
 import com.example.S3Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +14,7 @@ import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
 
 @ExtendWith(SpringExtension.class)
-@SpringJUnitConfig({S3Configuration.class, AppConfiguration.class})
+@SpringJUnitConfig({S3Configuration.class, DocumentConfiguration.class})
 public abstract class IntegrationTest {
 
     protected static final String IMAGE = "localstack/localstack:0.12.15";
