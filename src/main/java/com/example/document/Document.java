@@ -1,4 +1,4 @@
-package com.example;
+package com.example.document;
 
 public class Document {
 
