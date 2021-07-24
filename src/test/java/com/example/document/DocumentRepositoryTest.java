@@ -37,8 +37,6 @@ class DocumentRepositoryTest extends IntegrationTest {
         IntegrationTest.setApplicationProperties(registry, CONTAINER);
     }
 
-    private final UUID ownerId = UUID.randomUUID();
-
     private String bucket;
     private URI endpoint;
     private DocumentRepository repository;
@@ -52,8 +50,9 @@ class DocumentRepositoryTest extends IntegrationTest {
 
     @Test
     void testCreatingDocument() {
-        var path = Path.of("src", "test", "resources", "pepper.jpeg");
-        var mediaType = MediaType.IMAGE_JPEG;
+        var path = DocumentTestBuilder.IMAGE_PATH;
+        var mediaType = DocumentTestBuilder.IMAGE_MEDIA_TYPE;
+        var ownerId = DocumentTestBuilder.IMAGE_OWNER_ID;
 
         StepVerifier.create(repository.create(ownerId, path, mediaType))
             .assertNext(document -> {

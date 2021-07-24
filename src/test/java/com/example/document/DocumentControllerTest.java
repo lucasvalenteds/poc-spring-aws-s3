@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -45,7 +44,6 @@ class DocumentControllerTest extends IntegrationTest {
         IntegrationTest.setApplicationProperties(registry, CONTAINER);
     }
 
-    private final UUID ownerId = UUID.randomUUID();
     private final WebClient webClient = WebClient.create();
 
     private Path uploadsDirectory;
@@ -69,11 +67,13 @@ class DocumentControllerTest extends IntegrationTest {
 
     @Test
     void testCreatingDocument() {
-        var file = new FileSystemResource(Path.of("src", "test", "resources", "pepper.jpeg"));
+        var ownerId = DocumentTestBuilder.IMAGE_OWNER_ID;
+        var mediaType = DocumentTestBuilder.IMAGE_MEDIA_TYPE;
+        var file = new FileSystemResource(DocumentTestBuilder.IMAGE_PATH);
 
         var document = client.post()
             .uri("/documents/owners/{ownerId}", ownerId)
-            .contentType(MediaType.IMAGE_JPEG)
+            .contentType(mediaType)
             .body(BodyInserters.fromMultipartData("file", file))
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.CREATED)
