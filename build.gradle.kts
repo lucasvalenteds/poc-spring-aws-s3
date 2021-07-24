@@ -30,6 +30,9 @@ dependencies {
     implementation("software.amazon.awssdk", "s3", properties["version.aws"].toString())
 
     testImplementation("org.junit.jupiter", "junit-jupiter", properties["version.junit"].toString())
+    testImplementation("org.testcontainers", "testcontainers", properties["version.testcontainers"].toString())
+    testImplementation("org.testcontainers", "localstack", properties["version.testcontainers"].toString())
+    testImplementation("org.testcontainers", "junit-jupiter", properties["version.testcontainers"].toString())
 }
 
 configure<JavaPluginExtension> {
