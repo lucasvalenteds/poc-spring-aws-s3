@@ -13,7 +13,7 @@ import reactor.netty.http.server.HttpServer;
 import java.time.Duration;
 
 @EnableWebFlux
-@ComponentScan("com.example.spring")
+@ComponentScan("com.example")
 @PropertySource("classpath:application.properties")
 public class Main {
 
