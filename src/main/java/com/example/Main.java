@@ -14,7 +14,6 @@ import java.time.Duration;
 
 @EnableWebFlux
 @ComponentScan("com.example")
-@PropertySource("classpath:application.properties")
 public class Main {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
