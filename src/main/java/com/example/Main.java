@@ -24,11 +24,11 @@ public class Main {
         var environment = context.getEnvironment();
 
         HttpServer.create()
-                .port(environment.getRequiredProperty("server.port", Integer.class))
-                .handle(new ReactorHttpHandlerAdapter(WebHttpHandlerBuilder.applicationContext(context).build()))
-                .bindUntilJavaShutdown(
-                        Duration.ofMillis(1000),
-                        server -> logger.info("Server running on port {}", server.port())
-                );
+            .port(environment.getRequiredProperty("server.port", Integer.class))
+            .handle(new ReactorHttpHandlerAdapter(WebHttpHandlerBuilder.applicationContext(context).build()))
+            .bindUntilJavaShutdown(
+                Duration.ofMillis(1000),
+                server -> logger.info("Server running on port {}", server.port())
+            );
     }
 }
