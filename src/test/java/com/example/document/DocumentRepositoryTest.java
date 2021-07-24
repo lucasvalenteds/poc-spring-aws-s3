@@ -5,11 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import reactor.test.StepVerifier;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.UUID;
@@ -31,14 +28,11 @@ class DocumentRepositoryTest extends IntegrationTest {
     }
 
     @Test
-    void testPersistingFile() throws IOException {
-        var name = "pepper";
-        var originalFilename = name + ".jpeg";
-        var contentType = MediaType.IMAGE_JPEG_VALUE;
-        var content = Files.readAllBytes(Path.of("src", "test", "resources", originalFilename));
-        var file = new MockMultipartFile(name, originalFilename, contentType, content);
+    void testPersistingFile() {
+        var path = Path.of("src", "test", "resources", "pepper.jpeg");
+        var mediaType = MediaType.IMAGE_JPEG;
 
-        StepVerifier.create(repository.persist(ownerId, file))
+        StepVerifier.create(repository.persist(ownerId, path, mediaType))
             .assertNext(document -> {
                 assertNotNull(document.getUrl());
 
