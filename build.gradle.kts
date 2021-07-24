@@ -19,6 +19,8 @@ dependencies {
     testImplementation("org.springframework", "spring-test", properties["version.spring"].toString())
 
     implementation("io.projectreactor", "reactor-core", properties["version.reactor"].toString())
+    implementation("io.projectreactor.netty", "reactor-netty-core", properties["version.netty"].toString())
+    implementation("io.projectreactor.netty", "reactor-netty-http", properties["version.netty"].toString())
     testImplementation("io.projectreactor", "reactor-test", properties["version.reactor"].toString())
 
     implementation("com.fasterxml.jackson.core", "jackson-databind", properties["version.jackson"].toString())
