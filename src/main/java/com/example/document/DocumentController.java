@@ -3,6 +3,7 @@ package com.example.document;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,15 @@ public class DocumentController {
             .delayUntil(tuple -> tuple.getT2().transferTo(tuple.getT3()))
             .flatMap(tuple -> repository.create(tuple.getT1(), tuple.getT3(), tuple.getT4()))
             .delayUntil(tuple -> deleteFileFromFileSystem(filename));
+    }
+
+    @GetMapping(
+        path = "/owners/{ownerId}/{filename}",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Document> createTemporaryURL(@PathVariable UUID ownerId, @PathVariable String filename) {
+        return repository.generateTemporaryURL(ownerId, filename);
     }
 
     private Mono<Void> deleteFileFromFileSystem(Mono<Path> path) {

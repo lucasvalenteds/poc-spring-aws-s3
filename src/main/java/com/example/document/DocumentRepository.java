@@ -3,15 +3,22 @@ package com.example.document;
 import org.springframework.http.MediaType;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import software.amazon.awssdk.awscore.presigner.PresignedRequest;
 import software.amazon.awssdk.core.async.AsyncRequestBody;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.UUID;
 
 public final class DocumentRepository {
+
+    private static final String DOCUMENT_KEY_TEMPLATE = "example-service/uploads/%s/%s";
+    private static final Duration TEMPORARY_URL_EXPIRATION = Duration.ofDays(1);
 
     private final String bucket;
     private final S3AsyncClient client;
@@ -43,6 +50,25 @@ public final class DocumentRepository {
             });
     }
 
+    public Mono<Document> generateTemporaryURL(UUID ownerId, String filename) {
+        return Mono.from(createDocumentKey(ownerId, filename))
+            .flatMap(documentKey -> {
+                var objectRequest = GetObjectRequest.builder()
+                    .bucket(this.bucket)
+                    .key(documentKey)
+                    .build();
+
+                var preSignRequest = GetObjectPresignRequest.builder()
+                    .signatureDuration(TEMPORARY_URL_EXPIRATION)
+                    .getObjectRequest(objectRequest)
+                    .build();
+
+                return Mono.fromCallable(() -> signer.presignGetObject(preSignRequest))
+                    .map(PresignedRequest::url)
+                    .map(Document::withURL);
+            });
+    }
+
     private Mono<UUID> createRandomUUID() {
         return Mono.fromCallable(UUID::randomUUID)
             .subscribeOn(Schedulers.boundedElastic());
@@ -58,7 +84,11 @@ public final class DocumentRepository {
             (documentId, extension) -> documentId + "." + extension);
 
         return Mono.zip(ownerId, filename)
-            .map(tuple -> String.format("example-service/uploads/%s/%s", tuple.getT1(), tuple.getT2()));
+            .map(tuple -> String.format(DOCUMENT_KEY_TEMPLATE, tuple.getT1(), tuple.getT2()));
+    }
+
+    private Mono<String> createDocumentKey(UUID ownerId, String filename) {
+        return Mono.fromCallable(() -> String.format(DOCUMENT_KEY_TEMPLATE, ownerId, filename));
     }
 
     private Mono<AsyncRequestBody> createRequestBodyWithFile(Path path) {

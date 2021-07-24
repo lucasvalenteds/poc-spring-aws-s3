@@ -1,5 +1,7 @@
 package com.example.document;
 
+import java.net.URL;
+
 public class Document {
 
     private String url;
@@ -18,5 +20,9 @@ public class Document {
         document.setUrl(url);
 
         return document;
+    }
+
+    public static Document withURL(URL url) {
+        return Document.withURL(url.toString());
     }
 }
