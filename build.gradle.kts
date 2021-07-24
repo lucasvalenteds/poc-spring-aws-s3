@@ -27,7 +27,8 @@ dependencies {
     implementation("com.fasterxml.jackson.core", "jackson-databind", properties["version.jackson"].toString())
     implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", properties["version.jackson"].toString())
 
-    implementation("software.amazon.awssdk", "s3", properties["version.aws"].toString())
+    implementation("com.amazonaws", "aws-java-sdk-s3", properties["version.aws.v1"].toString())
+    implementation("software.amazon.awssdk", "s3", properties["version.aws.v2"].toString())
 
     testImplementation("org.junit.jupiter", "junit-jupiter", properties["version.junit"].toString())
     testImplementation("org.testcontainers", "testcontainers", properties["version.testcontainers"].toString())
