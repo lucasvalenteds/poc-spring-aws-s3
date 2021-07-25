@@ -42,3 +42,33 @@ The web service configuration should be informed via environment variables and f
 
 > The parameter `FILE=<filename>` of tasks to upload file and create temporary URL is optional.
 
+## Preview
+
+```
+$ make upload FILE=example.gif 
+{
+  "url": "document-service/uploads/a596a4a9-214d-45c7-b918-d63cdd08582d/082988d6-778b-44c1-b515-bad12503f639.gif"
+}
+```
+
+```
+$ make temporary-url FILE=082988d6-778b-44c1-b515-bad12503f639.gif
+{
+  "url": "http://localhost:4566/example-company-s3-us-east-1/document-service/uploads/a596a4a9-214d-45c7-b918-d63cdd08582d/082988d6-778b-44c1-b515-bad12503f639.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210725T161626Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=admin%2F20210725%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=43445856f8521d27c42bd916f2832d71b69bef7f4e82f05ec67e4846a6eab126"
+}
+```
+
+```
+$ make list-files 
+2021-07-25 16:16:14     176728 document-service/uploads/a596a4a9-214d-45c7-b918-d63cdd08582d/082988d6-778b-44c1-b515-bad12503f639.gif
+2021-07-25 16:15:50      35511 document-service/uploads/a596a4a9-214d-45c7-b918-d63cdd08582d/b884067c-c3f8-4721-b2be-19d11f2c43c7.jpeg
+2021-07-25 16:15:59      35511 document-service/uploads/a596a4a9-214d-45c7-b918-d63cdd08582d/f982f1b9-4b39-4a79-b950-daeac74279b3.jpeg
+```
+
+```
+$ make delete-files 
+delete: s3://example-company-s3-us-east-1/document-service/uploads/a596a4a9-214d-45c7-b918-d63cdd08582d/082988d6-778b-44c1-b515-bad12503f639.gif
+delete: s3://example-company-s3-us-east-1/document-service/uploads/a596a4a9-214d-45c7-b918-d63cdd08582d/f982f1b9-4b39-4a79-b950-daeac74279b3.jpeg
+delete: s3://example-company-s3-us-east-1/document-service/uploads/a596a4a9-214d-45c7-b918-d63cdd08582d/b884067c-c3f8-4721-b2be-19d11f2c43c7.jpeg
+```
+
