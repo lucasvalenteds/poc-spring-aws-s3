@@ -40,3 +40,5 @@ The web service configuration should be informed via environment variables and f
 | List files | `make list-files` |
 | Delete files | `make delete-files` |
 
+> The parameter `FILE=<filename>` of tasks to upload file and create temporary URL is optional.
+
