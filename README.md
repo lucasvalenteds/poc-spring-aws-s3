@@ -27,6 +27,7 @@ The web service configuration should be informed via environment variables and f
 | Destroy S3 instance in Localstack | `make destroy-s3-localstack` |
 | Provision S3 instance in AWS | `make provision-s3-aws` |
 | Destroy S3 instance in AWS | `make destroy-s3-aws` |
+| Show Localstack logs | `make show-localstack-logs` |
 
 > Commands to provision and destroy S3 instance in AWS requires [AWS CLI environment variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) to be defined.
 
