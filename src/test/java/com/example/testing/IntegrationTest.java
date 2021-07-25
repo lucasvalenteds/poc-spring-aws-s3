@@ -1,10 +1,12 @@
 package com.example.testing;
 
+import com.example.ServiceConfiguration;
 import com.example.document.DocumentConfiguration;
 import com.example.S3Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -14,7 +16,8 @@ import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
 
 @ExtendWith(SpringExtension.class)
-@SpringJUnitConfig({S3Configuration.class, DocumentConfiguration.class})
+@ActiveProfiles("local")
+@SpringJUnitConfig({ServiceConfiguration.class, S3Configuration.class, DocumentConfiguration.class})
 public abstract class IntegrationTest {
 
     protected static final String IMAGE = "localstack/localstack:0.12.15";
@@ -24,6 +27,7 @@ public abstract class IntegrationTest {
         registry.add("aws.secretKey", container::getSecretKey);
         registry.add("aws.region", container::getRegion);
         registry.add("aws.url", () -> container.getEndpointOverride(LocalStackContainer.Service.S3));
+        registry.add("server.uploads", () -> "src/main/resources/uploads-test");
     }
 
     @BeforeAll

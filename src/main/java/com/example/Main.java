@@ -18,7 +18,10 @@ public final class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        var context = new AnnotationConfigApplicationContext(Main.class.getPackageName());
+        var context = new AnnotationConfigApplicationContext();
+        context.getEnvironment().setActiveProfiles(args);
+        context.scan(Main.class.getPackageName());
+        context.refresh();
 
         var environment = context.getEnvironment();
 

@@ -15,9 +15,10 @@ The web service configuration should be informed via environment variables and f
 | Description | Command |
 | :--- | :--- |
 | Run tests | `./gradlew test` |
-| Run application | `./gradlew run` |
+| Run application (AWS) | `./gradlew run --args='dev'` |
+| Run application (Localstack) | `./gradlew run --args='local'` |
 
-> Set environment variable `AWS_URL=http://localhost:4566` to use Localstack instead of AWS for manual testing.
+> Running targeting AWS requires [AWS CLI environment variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) to be defined.
 
 ### Infrastructure
 
