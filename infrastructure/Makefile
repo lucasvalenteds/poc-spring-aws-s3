@@ -1,31 +1,31 @@
 AWS_ACCESS_KEY = ""
 AWS_SECRET_KEY = ""
 
-provision-s3:
+provision-s3-aws:
 	@terraform init
 	@terraform validate
 	@terraform apply -auto-approve \
 		-var access_key="$(AWS_ACCESS_KEY)" \
 		-var secret_key="$(AWS_SECRET_KEY)"
 
-destroy-s3:
+destroy-s3-aws:
 	@terraform destroy -auto-approve \
 		-var access_key="$(AWS_ACCESS_KEY)" \
 		-var secret_key="$(AWS_SECRET_KEY)"
 
-provision-localstack:
+provision-s3-localstack:
 	@docker-compose up \
 		--detach \
 		--force-recreate \
 		--renew-anon-volumes \
 		--remove-orphans
 
-destroy-localstack:
+destroy-s3-localstack:
 	@docker-compose down \
 		--remove-orphans \
 		--volumes
 
-inspect-localstack:
+inspect-s3-localstack:
 	@docker-compose logs --follow
 
 list-files:
