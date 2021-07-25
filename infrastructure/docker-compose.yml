@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  localstack:
+    image: localstack/localstack:0.12.15
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DATA_DIR=/tmp/localstack/data
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "./create-s3-bucket.sh:/docker-entrypoint-initaws.d/create-s3-bucket.sh"
+      - "/tmp/localstack:/tmp/localstack"
+      - "/tmp/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - network-infrastructure
+networks:
+  network-infrastructure:
+    driver: bridge
