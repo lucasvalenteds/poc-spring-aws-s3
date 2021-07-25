@@ -12,3 +12,20 @@ temporary-url:
 		--request GET \
 		"http://localhost:8080/documents/owners/$(OWNER_ID)/$(FILE)" | jq
 
+LOCALSTACK_BUCKET = "example-company-s3-us-east-1"
+LOCALSTACK_URL = "http://localhost:4566"
+LOCALSTACK_PROFILE = "localstack"
+
+list-files:
+	@docker-compose exec localstack \
+		aws s3 ls s3://$(LOCALSTACK_BUCKET) \
+		--recursive \
+		--endpoint-url $(LOCALSTACK_URL) \
+		--profile $(LOCALSTACK_PROFILE)
+
+delete-files:
+	@docker-compose exec localstack \
+		aws s3 rm s3://$(LOCALSTACK_BUCKET) \
+		--recursive \
+		--endpoint-url $(LOCALSTACK_URL) \
+		--profile $(LOCALSTACK_PROFILE)
