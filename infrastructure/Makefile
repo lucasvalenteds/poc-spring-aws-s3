@@ -1,17 +1,14 @@
-AWS_ACCESS_KEY = ""
-AWS_SECRET_KEY = ""
-
 provision-s3-aws:
 	@terraform init
 	@terraform validate
 	@terraform apply -auto-approve \
-		-var access_key="$(AWS_ACCESS_KEY)" \
-		-var secret_key="$(AWS_SECRET_KEY)"
+		-var access_key="$(AWS_ACCESS_KEY_ID)" \
+		-var secret_key="$(AWS_SECRET_ACCESS_KEY)"
 
 destroy-s3-aws:
 	@terraform destroy -auto-approve \
-		-var access_key="$(AWS_ACCESS_KEY)" \
-		-var secret_key="$(AWS_SECRET_KEY)"
+		-var access_key="$(AWS_ACCESS_KEY_ID)" \
+		-var secret_key="$(AWS_SECRET_ACCESS_KEY)"
 
 provision-s3-localstack:
 	@docker-compose up \
