@@ -25,4 +25,11 @@ public final class Document {
     public static Document withURL(URL url) {
         return Document.withURL(url.toString());
     }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+            "url='" + url + '\'' +
+            '}';
+    }
 }
