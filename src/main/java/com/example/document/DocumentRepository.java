@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public final class DocumentRepository {
 
-    private static final String DOCUMENT_KEY_TEMPLATE = "example-service/uploads/%s/%s";
+    private static final String DOCUMENT_KEY_TEMPLATE = "document-service/uploads/%s/%s";
     private static final Duration TEMPORARY_URL_EXPIRATION = Duration.ofDays(1);
 
     private final String bucket;

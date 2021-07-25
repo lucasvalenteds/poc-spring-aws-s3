@@ -4,7 +4,6 @@ import com.example.testing.IntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.localstack.LocalStackContainer;
@@ -59,7 +58,7 @@ class DocumentRepositoryTest extends IntegrationTest {
                 assertNotNull(document.getUrl());
 
                 var url = Arrays.stream(document.getUrl().split("/")).iterator();
-                assertEquals("example-service", url.next());
+                assertEquals("document-service", url.next());
                 assertEquals("uploads", url.next());
                 assertEquals(ownerId.toString(), url.next());
 
@@ -93,7 +92,7 @@ class DocumentRepositoryTest extends IntegrationTest {
                     .containsSubsequence(List.of(
                         endpoint.toString(),
                         bucket,
-                        "example-service/uploads",
+                        "document-service/uploads",
                         ownerId.toString(),
                         filename
                     ))

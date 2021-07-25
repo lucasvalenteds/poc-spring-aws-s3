@@ -84,7 +84,7 @@ class DocumentControllerTest extends IntegrationTest {
         assertNotNull(document.getUrl());
 
         var url = Arrays.stream(document.getUrl().split("/")).iterator();
-        assertEquals("example-service", url.next());
+        assertEquals("document-service", url.next());
         assertEquals("uploads", url.next());
         assertEquals(ownerId.toString(), url.next());
 
