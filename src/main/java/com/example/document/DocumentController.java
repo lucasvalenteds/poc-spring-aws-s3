@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/documents")
-public class DocumentController {
+public final class DocumentController {
 
     private final DocumentRepository repository;
     private final Path uploadsDirectory;
@@ -29,11 +29,7 @@ public class DocumentController {
         this.uploadsDirectory = uploadsDirectory;
     }
 
-    @PostMapping(
-        path = "/owners/{ownerId}",
-        consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-        produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @PostMapping(path = "/owners/{ownerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Document> create(@PathVariable UUID ownerId, @RequestPart("file") Mono<FilePart> filePart) {
         var owner = Mono.just(ownerId);
@@ -50,10 +46,7 @@ public class DocumentController {
             .delayUntil(tuple -> deleteFileFromFileSystem(filename));
     }
 
-    @GetMapping(
-        path = "/owners/{ownerId}/{filename}",
-        produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @GetMapping(path = "/owners/{ownerId}/{filename}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Mono<Document> createTemporaryURL(@PathVariable UUID ownerId, @PathVariable String filename) {
         return repository.generateTemporaryURL(ownerId, filename);
