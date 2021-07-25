@@ -2,7 +2,7 @@ package com.example.document;
 
 import java.net.URL;
 
-public class Document {
+public final class Document {
 
     private String url;
 
