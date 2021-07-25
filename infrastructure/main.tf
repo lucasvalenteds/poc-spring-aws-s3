@@ -20,7 +20,7 @@ variable "region" {
 }
 
 variable "bucket_name" {
-    default = "example-company-s3-${var.region}"
+    default = "example-company-s3"
 }
 
 provider "aws" {

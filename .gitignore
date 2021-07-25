@@ -6,3 +6,4 @@ out/
 *.log
 .terraform/
 terraform.*
+.terraform.lock.hcl
